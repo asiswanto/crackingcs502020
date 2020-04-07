@@ -1,0 +1,61 @@
+#include<stdio.h>
+#include<cs50.h>
+#include<math.h>
+
+int main(void)
+{
+    long cardnumber;
+    cardnumber = get_long("Number: ");
+
+    int numberlength = log10(cardnumber) + 1; //to get the number length
+    int firstTwodigits = cardnumber / pow(10, (numberlength - 2)); 
+    
+    //to get the first two digit, based on the divide priciples.
+
+//checksum
+    int sum = 0;
+    int sum1 = cardnumber % 10;
+    cardnumber = cardnumber / 10;
+    while (cardnumber > 0)
+    {
+        sum1 = sum1 + ((cardnumber / 10) % 10);
+        int digit = cardnumber % 10;
+        if (digit * 2 < 10)
+        {
+            sum = sum + digit * 2;
+        }
+        else 
+        {
+            sum = sum + (digit * 2 % 10) + (digit * 2 / 10);
+        }
+        cardnumber = cardnumber / 100;
+    }
+    sum = sum1 + sum;
+
+//output
+    if (sum % 10 == 0)
+    {
+        if (numberlength == 15 && (firstTwodigits == 34 | firstTwodigits == 37))
+        {
+            printf("AMEX\n");
+        }
+        else if (numberlength == 16 && (firstTwodigits > 50 && firstTwodigits < 56))
+        {
+            printf("MASTERCARD\n");
+        }
+        else if ((numberlength == 13 | numberlength == 16) && (firstTwodigits / 10 == 4))
+        {
+            printf("VISA\n");
+        }
+        else
+        {
+            printf("INVALID\n");
+        }
+    }
+    else 
+    {
+        printf("INVALID\n");   
+    }
+}
+    
+
