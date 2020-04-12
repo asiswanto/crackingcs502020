@@ -1,0 +1,75 @@
+#include<stdio.h>
+#include<cs50.h>
+#include<string.h>
+#include<ctype.h>
+
+int main(int argc, string argv[])
+{
+    int keycount = 0, repcount = 0;
+    if (argc != 2)
+    {
+        printf("Usage: ./substitution key\n");
+        return 1;
+    }
+    else
+    {
+        for (int i = 0, n = strlen(argv[1]); i < n; i++)
+        {
+            keycount++;
+            if (isalpha(argv[1][i]))
+            {
+                for (int j = 0; j < n; j++)
+                {
+                    if (argv[1][j] == argv[1][i])
+                    {
+                        repcount++;
+                    }
+                }
+            }
+            else
+            {
+                printf("Key must only include letters\n");
+                return 1;
+            }
+        }
+        if (keycount != 26)
+        {
+            printf("Key must contain 26 characters\n");
+            return 1;
+        }
+        else if (keycount == 26)
+        {
+
+            if (repcount != 26)
+            {
+                printf("Key must not repeat letters\n");
+                return 1;
+            }
+            else
+            {
+                string plaintext = get_string("plaintext: ");
+                printf("ciphertext: ");
+
+                for (int k = 0, m = strlen(plaintext); k < m; k++)
+                {
+                    if (isupper(plaintext[k]))
+                    {
+                        plaintext[k] = toupper(argv[1][plaintext[k] - 'A']);
+                        printf("%c", plaintext[k]);
+                    }
+                    else if (islower(plaintext[k]))
+                    {
+                        plaintext[k] = tolower(argv[1][plaintext[k] - 'a']);
+                        printf("%c", plaintext[k]);
+                    }
+                    else
+                    {
+                        printf("%c", plaintext[k]);
+                    }
+                }
+                printf("\n");
+                return 0;
+            }
+        }
+    }
+}
